@@ -285,15 +285,18 @@ services:
         condition: service_completed_successfully
   localstack:
     image: localstack/localstack
+    container_name: localstack-container
     ports:
-      - "4566:4566"
+      - "4566:4566"  # Map LocalStack port
     environment:
-      SERVICES: s3
-      DEFAULT_REGION: us-east-1
-    volumes:
-      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-
+      - SERVICES=s3,dynamodb  # Specify AWS services to emulate
+      - AWS_DEFAULT_REGION=us-east-1
+    networks:
+      - localstack_network
 volumes:
   postgres-db-volume:
   minio-data-volume:
+
+networks:
+  localstack_network:
+    driver: bridge
