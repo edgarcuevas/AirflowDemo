@@ -20,7 +20,7 @@ default_args = {
 
 def read_s3_file(task_instance):
     print("Made it here to read_s3_file function")
-    s3_hook = S3Hook(aws_conn_id='aws_default')
+    s3_hook = S3Hook(aws_conn_id='aws_local')
     print(s3_hook)
     # Fetch the matched key from XCom
     matched_key = task_instance.xcom_pull(task_ids='s3_file_sensor', key='return_value')

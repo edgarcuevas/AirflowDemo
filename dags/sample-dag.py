@@ -14,11 +14,12 @@ default_args = {
 
 def check_s3_file():
     print("Made it here to check_s3_file function")
-    s3_hook = S3Hook(aws_conn_id='aws_default')
+    s3_hook = S3Hook(aws_conn_id='aws_local')
     bucket_name = 'spotify-requests'
     try:
         keys = s3_hook.list_keys(bucket_name)
     except EndpointConnectionError as e:
+        
         print(f"Error: {e}")
         keys = None
     if keys:
